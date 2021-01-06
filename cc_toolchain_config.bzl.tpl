@@ -176,6 +176,23 @@ def _impl(ctx):
         ],
     )
 
+    force_pic_flags_feature = feature(
+        name = "force_pic_flags",
+        flag_sets = [
+            flag_set(
+                actions = [
+                    ACTION_NAMES.cpp_link_executable,
+                ],
+                flag_groups = [
+                    flag_group(
+                        flags = ["-pie"],
+                        expand_if_available = "force_pic",
+                    ),
+                ],
+            ),
+        ],
+    )
+
     default_compile_flags_feature = feature(
         name = "default_compile_flags",
         enabled = True,
@@ -330,6 +347,7 @@ def _impl(ctx):
 
                 default_compile_flags_feature,
                 default_link_flags_feature,
+                force_pic_flags_feature,
                 supports_dynamic_linker_feature,
                 user_compile_flags_feature,
                 unfiltered_compile_flags_feature,
