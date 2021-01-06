@@ -22,7 +22,7 @@ def cc_flags_supplier(**attrs):
     Args:
       **attrs: Rule attributes
     """
-    _cc_flags_supplier(**_add_tags(attrs))
+    _cc_flags_supplier(**attrs)
 
 def _impl(repository_ctx):
     dir_labels = repository_ctx.attr.additional_system_include_directories
