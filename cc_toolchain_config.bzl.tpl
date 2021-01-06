@@ -24,6 +24,16 @@ load(
 )
 load("@bazel_tools//tools/build_defs/cc:action_names.bzl", "ACTION_NAMES")
 
+load("//rules_impl:cc_flags_supplier.bzl", _cc_flags_supplier = "cc_flags_supplier")
+
+def cc_flags_supplier(**attrs):
+    """Bazel cc_flags_supplier rule.
+
+    Args:
+      **attrs: Rule attributes
+    """
+    _cc_flags_supplier(**_add_tags(attrs))
+
 ALL_COMPILE_ACTIONS = [
     ACTION_NAMES.c_compile,
     ACTION_NAMES.cpp_compile,
@@ -170,23 +180,6 @@ def _impl(ctx):
                             "-D__TIMESTAMP__=\"redacted\"",
                             "-D__TIME__=\"redacted\"",
                         ],
-                    ),
-                ],
-            ),
-        ],
-    )
-
-    force_pic_flags_feature = feature(
-        name = "force_pic_flags",
-        flag_sets = [
-            flag_set(
-                actions = [
-                    ACTION_NAMES.cpp_link_executable,
-                ],
-                flag_groups = [
-                    flag_group(
-                        flags = ["-pie"],
-                        expand_if_available = "force_pic",
                     ),
                 ],
             ),
@@ -347,7 +340,6 @@ def _impl(ctx):
 
                 default_compile_flags_feature,
                 default_link_flags_feature,
-                force_pic_flags_feature,
                 supports_dynamic_linker_feature,
                 user_compile_flags_feature,
                 unfiltered_compile_flags_feature,
