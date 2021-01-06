@@ -24,16 +24,6 @@ load(
 )
 load("@bazel_tools//tools/build_defs/cc:action_names.bzl", "ACTION_NAMES")
 
-load("//rules_impl:cc_flags_supplier.bzl", _cc_flags_supplier = "cc_flags_supplier")
-
-def cc_flags_supplier(**attrs):
-    """Bazel cc_flags_supplier rule.
-
-    Args:
-      **attrs: Rule attributes
-    """
-    _cc_flags_supplier(**_add_tags(attrs))
-
 ALL_COMPILE_ACTIONS = [
     ACTION_NAMES.c_compile,
     ACTION_NAMES.cpp_compile,

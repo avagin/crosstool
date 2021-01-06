@@ -14,6 +14,15 @@
 """Rules for configuring the C++ cross-toolchain."""
 
 load(":windows_cc_configure.bzl", "configure_windows_toolchain")
+load("//rules_impl:cc_flags_supplier.bzl", _cc_flags_supplier = "cc_flags_supplier")
+
+def cc_flags_supplier(**attrs):
+    """Bazel cc_flags_supplier rule.
+
+    Args:
+      **attrs: Rule attributes
+    """
+    _cc_flags_supplier(**_add_tags(attrs))
 
 def _impl(repository_ctx):
     dir_labels = repository_ctx.attr.additional_system_include_directories
